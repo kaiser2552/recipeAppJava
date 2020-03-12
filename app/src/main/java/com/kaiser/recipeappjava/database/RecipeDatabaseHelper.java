@@ -1,8 +1,15 @@
 package com.kaiser.recipeappjava.database;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.kaiser.recipeappjava.model.RecipeModel;
+
+import java.util.ArrayList;
 
 public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
@@ -17,6 +24,54 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
     public RecipeDatabaseHelper(Context context)  {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public ArrayList<RecipeModel> allRecipeList() {
+        ArrayList<RecipeModel>  recipeList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_RECIPES;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()) {
+            RecipeModel recipe = new RecipeModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            recipeList.add(recipe);
+            cursor.moveToNext();
+        }
+        return recipeList;
+    }
+
+    public Integer deleteRecipe(String recipeName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] recipe = {recipeName};
+        return db.delete(TABLE_RECIPES, "$KEY_RECIPE_NAME=?", recipe);
+    }
+
+    public Long addRecipe(RecipeModel recipe) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Creating content values
+        ContentValues values = new ContentValues();
+        values.put(KEY_RECIPE_NAME, recipe.getRecipeName());
+        values.put(KEY_RECIPE_TYPE, recipe.getRecipeType());
+        values.put(KEY_RECIPE_IMAGE_URL, recipe.getRecipeImageURL());
+        values.put(KEY_RECIPE_INGREDIENTS, recipe.getRecipeIngredients());
+        values.put(KEY_RECIPE_STEPS, recipe.getRecipeStep());
+
+        return db.insert(TABLE_RECIPES, null, values);
+    }
+
+    public Integer updateRecipe(RecipeModel recipe, String oldRecipeName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_RECIPE_NAME, recipe.getRecipeName());
+        values.put(KEY_RECIPE_TYPE, recipe.getRecipeType());
+        values.put(KEY_RECIPE_IMAGE_URL, recipe.getRecipeImageURL());
+        values.put(KEY_RECIPE_INGREDIENTS, recipe.getRecipeIngredients());
+        values.put(KEY_RECIPE_STEPS, recipe.getRecipeStep());
+        String[] oldRecipe = {oldRecipeName};
+        return db.update(TABLE_RECIPES, values, "$KEY_RECIPE_NAME=?", oldRecipe);
     }
 
     @Override

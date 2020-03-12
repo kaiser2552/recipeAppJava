@@ -7,11 +7,7 @@ package com.kaiser.recipeappjava.base.view;
  */
 public interface MvpView {
 
-    void updateApiCallCount(boolean start);
-
     void updateProgressDialog(boolean isShowProgressDialog);
-
-    void onUpdateStaffTokenSuccess(String entryRole, String userId, String name, String agentRank);
 
     void showErrorMessageDialog(String errorTitle, String errorMessage, Boolean isBackLogin);
 }

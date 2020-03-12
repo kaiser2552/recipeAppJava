@@ -1,25 +1,18 @@
 package com.kaiser.recipeappjava.base.activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import com.kaiser.recipeappjava.base.view.MvpView;
 import com.kaiser.recipeappjava.libs.ui.FullScreenProgressDialog;
-import java.util.Calendar;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseMvpActivity extends AppCompatActivity implements MvpView, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final long IDLE_TIMEOUT_MS = 15 * 60 * 1000; //milliseconds
     private final boolean hideToolbar;
-    protected boolean isSessionExpired;
-    private int apiCallCount = 0;
 
     private Unbinder unbinder;
 
@@ -69,15 +62,6 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements MvpVi
         super.onSaveInstanceState(outState);
     }
 
-    public void resetIdleTimer() {
-        isSessionExpired = false;
-    }
-
-    @Override
-    public void onUserInteraction() {
-        resetIdleTimer();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -92,24 +76,12 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements MvpVi
         FullScreenProgressDialog.hideProgressDialog();
     }
 
-    //for multiple api call on same page with single progress bar
-    @Override
-    public void updateApiCallCount(boolean start) {
-        if (start) {
-            this.apiCallCount += 1;
-        } else {
-            this.apiCallCount -= 1;
-        }
-    }
-
     @Override
     public void updateProgressDialog(boolean isShowProgressDialog) {
         if (isShowProgressDialog) {
             showProgressDialog();
         } else {
-            if (apiCallCount == 0) {
-                hideProgressDialog();
-            }
+            hideProgressDialog();
         }
     }
 }

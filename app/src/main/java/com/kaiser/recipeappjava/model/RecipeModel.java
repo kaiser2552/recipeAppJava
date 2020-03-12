@@ -1,46 +1,58 @@
 package com.kaiser.recipeappjava.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+public class RecipeModel {
 
-public class RecipeModel implements Parcelable {
-    private String recipeName = "";
-    private String recipeImageURL = "";
-    private String recipeType = "";
-    private String recipeIngredients = "";
-    private String recipeStep = "";
+    private String recipeName;
+    private String recipeImageURL;
+    private String recipeType;
+    private String recipeIngredients;
+    private String recipeStep;
 
-    protected RecipeModel(Parcel in) {
-        recipeName = in.readString();
-        recipeImageURL = in.readString();
-        recipeType = in.readString();
-        recipeIngredients = in.readString();
-        recipeStep = in.readString();
+    public RecipeModel(String recipeName, String recipeImageURL, String recipeType, String recipeIngredients, String recipeStep) {
+        this.recipeName = recipeName;
+        this.recipeImageURL = recipeImageURL;
+        this.recipeType = recipeType;
+        this.recipeIngredients = recipeIngredients;
+        this.recipeStep = recipeStep;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(recipeName);
-        dest.writeString(recipeImageURL);
-        dest.writeString(recipeType);
-        dest.writeString(recipeIngredients);
-        dest.writeString(recipeStep);
+    public String getRecipeName() {
+        return recipeName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
     }
 
-    public static final Creator<RecipeModel> CREATOR = new Creator<RecipeModel>() {
-        @Override
-        public RecipeModel createFromParcel(Parcel in) {
-            return new RecipeModel(in);
-        }
+    public String getRecipeImageURL() {
+        return recipeImageURL;
+    }
 
-        @Override
-        public RecipeModel[] newArray(int size) {
-            return new RecipeModel[size];
-        }
-    };
+    public void setRecipeImageURL(String recipeImageURL) {
+        this.recipeImageURL = recipeImageURL;
+    }
+
+    public String getRecipeType() {
+        return recipeType;
+    }
+
+    public void setRecipeType(String recipeType) {
+        this.recipeType = recipeType;
+    }
+
+    public String getRecipeIngredients() {
+        return recipeIngredients;
+    }
+
+    public void setRecipeIngredients(String recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
+    }
+
+    public String getRecipeStep() {
+        return recipeStep;
+    }
+
+    public void setRecipeStep(String recipeStep) {
+        this.recipeStep = recipeStep;
+    }
 }
