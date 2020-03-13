@@ -1,4 +1,4 @@
-package com.kaiser.recipeappjava.ui.listrecipe;
+package com.kaiser.recipeappjava.ui.addrecipe;
 
 import android.content.Intent;
 
@@ -9,11 +9,9 @@ import com.kaiser.recipeappjava.model.RecipeModel;
 
 import java.util.ArrayList;
 
-public interface ListRecipeFragmentMvpView extends MvpView {
-    ArrayList<RecipeModel> getRecipes();
-    void recipeClicked();
+public interface AddRecipeFragmentMvpView extends MvpView {
 
-    void addRecipeClicked();
+    void addRecipe(RecipeModel recipe);
 
     void switchActivity(Intent intent);
 

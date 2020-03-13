@@ -52,6 +52,8 @@ public abstract class BaseMvpFragment extends Fragment implements MvpView, Activ
     @LayoutRes
     protected abstract int getLayoutRes();
 
+    protected abstract void injectAppComponent();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

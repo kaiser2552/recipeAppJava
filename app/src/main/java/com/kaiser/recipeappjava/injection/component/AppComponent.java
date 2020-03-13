@@ -7,8 +7,10 @@ import com.kaiser.recipeappjava.AppApplication;
 import com.kaiser.recipeappjava.base.activity.BaseActivity;
 import com.kaiser.recipeappjava.base.activity.BaseMvpActivity;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
+import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.injection.context.ApplicationContext;
 import com.kaiser.recipeappjava.injection.module.AppModule;
+import com.kaiser.recipeappjava.ui.addrecipe.AddRecipeFragment;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeActivity;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeFragment;
 
@@ -28,13 +30,14 @@ public interface AppComponent {
 
     void inject(ListRecipeActivity activity);
 
-    void inject(AppApplication mApplication);
-
     /*Fragment*/
     void inject(BaseMvpFragment fragment);
 
     void inject(ListRecipeFragment fragment);
 
+    void inject(AddRecipeFragment fragment);
+
+    void inject(AppApplication mApplication);
 
     Application application();
 

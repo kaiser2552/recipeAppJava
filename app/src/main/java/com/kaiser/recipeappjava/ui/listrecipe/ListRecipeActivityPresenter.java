@@ -1,41 +1,18 @@
 package com.kaiser.recipeappjava.ui.listrecipe;
 
-import com.kaiser.recipeappjava.R;
-import com.kaiser.recipeappjava.base.activity.BaseMvpActivity;
+import com.kaiser.recipeappjava.base.presenter.BasePresenter;
 
-public class ListRecipeActivityPresenter extends BaseMvpActivity implements ListRecipeActivityMvpView {
+import javax.inject.Inject;
 
-    public ListRecipeActivityPresenter(boolean hideToolbar) {
-        super(hideToolbar);
-    }
+public class ListRecipeActivityPresenter extends BasePresenter<ListRecipeActivityMvpView> {
 
-    @Override
-    protected int setLayoutResourceId() {
-        return R.layout.fragment_list_recipe;
-    }
-
-    @Override
-    protected void injectAppComponent() {
+    @Inject
+    public ListRecipeActivityPresenter() {
 
     }
 
     @Override
-    protected void setToolBar() {
-
-    }
-
-    @Override
-    public void getRecipes() {
-
-    }
-
-    @Override
-    public void recipeClicked() {
-
-    }
-
-    @Override
-    public void showErrorMessageDialog(String errorTitle, String errorMessage, Boolean isBackLogin) {
-
+    public void attachView(ListRecipeActivityMvpView mvpView) {
+        super.attachView(mvpView);
     }
 }

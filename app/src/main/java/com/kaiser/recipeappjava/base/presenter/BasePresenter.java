@@ -4,14 +4,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.kaiser.recipeappjava.R;
 import com.kaiser.recipeappjava.base.view.MvpView;
 import com.kaiser.recipeappjava.injection.context.ApplicationContext;
 
 import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
-import timber.log.Timber;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for

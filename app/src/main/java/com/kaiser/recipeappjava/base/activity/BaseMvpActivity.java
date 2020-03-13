@@ -2,9 +2,13 @@ package com.kaiser.recipeappjava.base.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.kaiser.recipeappjava.R;
+import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
 import com.kaiser.recipeappjava.base.view.MvpView;
 import com.kaiser.recipeappjava.libs.ui.FullScreenProgressDialog;
 import butterknife.ButterKnife;
@@ -12,20 +16,11 @@ import butterknife.Unbinder;
 
 public abstract class BaseMvpActivity extends AppCompatActivity implements MvpView, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private final boolean hideToolbar;
-
     private Unbinder unbinder;
-
-    public BaseMvpActivity(boolean hideToolbar) {
-        this.hideToolbar = hideToolbar;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Call requestFeature before super.onCreate(savedInstanceState);
-        if (!hideToolbar) {
-            getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        }
 
         super.onCreate(savedInstanceState);
         injectAppComponent();
@@ -66,6 +61,20 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements MvpVi
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    protected void setFragment(BaseMvpFragment fragment) {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        switchFragment(fragment);
+    }
+
+    private void switchFragment(Fragment fragment) {
+        this
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
     }
 
     protected void showProgressDialog() {

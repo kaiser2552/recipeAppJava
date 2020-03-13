@@ -20,4 +20,13 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="TextView_title">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>
