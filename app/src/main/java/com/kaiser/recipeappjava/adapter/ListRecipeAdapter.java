@@ -29,7 +29,7 @@ public class ListRecipeAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return recipesList.get(0);
+        return recipesList.get(position);
     }
 
     @Override
@@ -44,12 +44,18 @@ public class ListRecipeAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             view = layoutInflater.inflate(R.layout.list_recipe_view, null);
-            viewHolder = new ViewHolder(view);
+            viewHolder = new ViewHolder();
             view.setTag(viewHolder);
         } else {
             view = convertView;
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.labelRecipeName = view.findViewById(R.id.lbl_recipe_name);
+        viewHolder.imageRecipe = view.findViewById(R.id.image_recipe);
+        viewHolder.labelRecipeType = view.findViewById(R.id.lbl_recipe_type);
+        viewHolder.labelIngredients = view.findViewById(R.id.lbl_recipe_ingredient);
+
         RecipeModel recipe = (RecipeModel) getItem(position);
         viewHolder.labelRecipeName.setText(recipe.getRecipeName());
         viewHolder.labelRecipeType.setText(recipe.getRecipeType());
@@ -66,16 +72,10 @@ public class ListRecipeAdapter extends BaseAdapter {
         return view;
     }
 
-    private class ViewHolder {
-        View row;
-
-        ViewHolder(View row){
-            this.row = row;
-        }
-
-        TextView labelRecipeName = row.findViewById(R.id.lbl_recipe_name);
-        ImageView imageRecipe = row.findViewById(R.id.image_recipe);
-        TextView labelRecipeType = row.findViewById(R.id.lbl_recipe_type);
-        TextView labelIngredients = row.findViewById(R.id.lbl_recipe_ingredient);
+    public static class ViewHolder {
+        TextView labelRecipeName;
+        ImageView imageRecipe;
+        TextView labelRecipeType;
+        TextView labelIngredients;
     }
 }

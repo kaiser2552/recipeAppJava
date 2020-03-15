@@ -3,36 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <ImageView
             android:id="@+id/top_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/menu_96"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/app_name" />
+            />
 
         <TextView
             android:id="@+id/label_recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
             android:contentDescription="@string/app_name"
             android:labelFor="@id/et_recipe_name"
             android:text="@string/hint_recipe_name"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_image" />
+            app:layout_constraintTop_toBottomOf="@+id/top_image"
+            />
 
         <EditText
             android:id="@+id/et_recipe_name"
@@ -46,21 +51,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_recipe_name"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            />
 
         <TextView
             android:id="@+id/label_recipe_image_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@string/app_name"
             android:labelFor="@id/et_recipe_image_link"
             android:text="@string/hint_recipe_link"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_recipe_name" />
+            app:layout_constraintTop_toBottomOf="@+id/et_recipe_name"
+            />
 
         <EditText
             android:id="@+id/et_recipe_image_link"
@@ -74,14 +80,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_recipe_image_link"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            />
 
         <TextView
             android:id="@+id/label_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@string/app_name"
             android:labelFor="@id/spinner_recipe_types"
@@ -89,7 +95,8 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/spinner_recipe_types"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_recipe_image_link" />
+            app:layout_constraintTop_toBottomOf="@+id/et_recipe_image_link"
+            />
 
         <Spinner
             android:id="@+id/spinner_recipe_types"
@@ -100,21 +107,22 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/label_spinner"
+            />
 
         <TextView
             android:id="@+id/label_recipe_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@string/app_name"
             android:labelFor="@id/et_recipe_ingredients"
             android:text="@string/ingredients"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_recipe_types" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner_recipe_types"
+            />
 
         <EditText
             android:id="@+id/et_recipe_ingredients"
@@ -129,21 +137,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_recipe_ingredients"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            />
 
         <TextView
             android:id="@+id/label_recipe_steps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@string/app_name"
             android:labelFor="@id/et_recipe_steps"
             android:text="@string/steps_detail"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_recipe_ingredients" />
+            app:layout_constraintTop_toBottomOf="@+id/et_recipe_ingredients"
+            />
 
         <EditText
             android:id="@+id/et_recipe_steps"
@@ -158,7 +167,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_recipe_steps"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            />
 
         <Button
             android:id="@+id/btn_add"
@@ -174,7 +184,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_recipe_steps"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.2"
+            />
 
         <ProgressBar
             android:id="@+id/loading"
@@ -190,6 +201,7 @@
             app:layout_constraintEnd_toEndOf="@+id/et_recipe_image_link"
             app:layout_constraintStart_toStartOf="@+id/et_recipe_image_link"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
+            app:layout_constraintVertical_bias="0.3"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -7,12 +7,12 @@ import javax.inject.Inject;
 public class AddRecipeFragmentPresenter extends BasePresenter<AddRecipeFragmentMvpView> {
 
     @Inject
-    public AddRecipeFragmentPresenter() {
+    AddRecipeFragmentPresenter() {
 
     }
 
     @Override
-    public void attachView(AddRecipeFragmentMvpView addRecipeFragmentMvpView) {
-        super.attachView(addRecipeFragmentMvpView);
+    public void attachView(AddRecipeFragmentMvpView mvpView) {
+        super.attachView(mvpView);
     }
 }

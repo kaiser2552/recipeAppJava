@@ -2,6 +2,8 @@ package com.kaiser.recipeappjava.base.activity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -14,7 +16,7 @@ import com.kaiser.recipeappjava.libs.ui.FullScreenProgressDialog;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseMvpActivity extends AppCompatActivity implements MvpView, ActivityCompat.OnRequestPermissionsResultCallback {
+public abstract class BaseMvpActivity extends AppCompatActivity implements MvpView, ActivityCompat.OnRequestPermissionsResultCallback, BaseMvpFragment.OnFragmentListener {
 
     private Unbinder unbinder;
 
@@ -53,7 +55,7 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements MvpVi
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
@@ -61,6 +63,16 @@ public abstract class BaseMvpActivity extends AppCompatActivity implements MvpVi
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onFragmentBackPressed() {
+        onBackPressed();
+    }
+
+    @Override
+    public void showAddRecipeButton(boolean isShow) {
+
     }
 
     protected void setFragment(BaseMvpFragment fragment) {

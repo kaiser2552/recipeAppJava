@@ -2,6 +2,8 @@ package com.kaiser.recipeappjava.base.activity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -43,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 

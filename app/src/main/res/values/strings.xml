@@ -37,8 +37,11 @@
     <string name="message_remove_success">Remove Recipe Successful!</string>
     <string name="message_remove_fail">Remove Recipe Fail!</string>
 
+    <string name="label_update">Update</string>
     <string name="message_update_success">Update Recipe Successful!</string>
     <string name="message_update_fail">Update Recipe Fail!</string>
 
     <string name="label_edit_recipe">Edit Recipe</string>
+
+    <string name="message_warning_lost_info">Please full-fill the form!</string>
 </resources>

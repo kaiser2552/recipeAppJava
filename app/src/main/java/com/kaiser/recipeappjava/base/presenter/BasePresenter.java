@@ -1,8 +1,6 @@
 package com.kaiser.recipeappjava.base.presenter;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 import com.kaiser.recipeappjava.base.view.MvpView;
 import com.kaiser.recipeappjava.injection.context.ApplicationContext;
@@ -57,26 +55,6 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     public T getMvpView() {
         return mMvpView;
-    }
-
-    public void checkViewAttached() {
-        if (!isViewAttached()) throw new MvpViewNotAttachedException();
-    }
-
-    public boolean isNetworkConnected(Context mContext) {
-        ConnectivityManager cm =
-                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        @SuppressWarnings("deprecation")
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-    }
-
-    public static class MvpViewNotAttachedException extends RuntimeException {
-        public MvpViewNotAttachedException() {
-            super("Please call Presenter.attachView(MvpView) before" +
-                    " requesting data to the Presenter");
-        }
     }
 }
 

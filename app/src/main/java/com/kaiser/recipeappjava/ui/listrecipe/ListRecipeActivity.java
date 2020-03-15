@@ -2,6 +2,7 @@ package com.kaiser.recipeappjava.ui.listrecipe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -57,14 +58,19 @@ public class ListRecipeActivity extends BaseMvpActivity implements ListRecipeAct
 
     }
 
+    @Override
+    public void showAddRecipeButton(boolean isShow) {
+        super.showAddRecipeButton(isShow);
+        if(isShow){
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
+    }
+
     @OnClick(R.id.fab)
     void addRecipe(){
         switchFragment(AddRecipeFragment.newInstance());
-    }
-
-    @Override
-    public void switchActivity(Intent intent) {
-        startActivity(intent);
     }
 
     @Override
@@ -78,5 +84,15 @@ public class ListRecipeActivity extends BaseMvpActivity implements ListRecipeAct
 
     public void setFragmentToRoot(BaseMvpFragment fragment) {
         setFragment(fragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            super.onBackPressed();
+        } else {
+            finish();
+        }
     }
 }

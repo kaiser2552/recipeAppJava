@@ -29,6 +29,7 @@ import timber.log.Timber;
 public abstract class BaseMvpFragment extends Fragment implements MvpView, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final Field CHILD_FRAGMENT_MANAGER_FIELD;
     private Unbinder unbinder;
+    protected OnFragmentListener fragmentListener = null;
 
     static {
         Field f = null;
@@ -47,6 +48,7 @@ public abstract class BaseMvpFragment extends Fragment implements MvpView, Activ
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectAppComponent();
     }
 
     @LayoutRes
@@ -87,21 +89,8 @@ public abstract class BaseMvpFragment extends Fragment implements MvpView, Activ
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        try {
-            if (CHILD_FRAGMENT_MANAGER_FIELD != null) {
-                try {
-                    CHILD_FRAGMENT_MANAGER_FIELD.set(this, null);
-                } catch (Exception e) {
-                    Timber.e(e);
-                }
-            }
-        } catch (Exception e) {
-            Timber.e(e, "fail detach " + CHILD_FRAGMENT_MANAGER_FIELD);
+        if (context instanceof OnFragmentListener) {
+            fragmentListener = (OnFragmentListener) context;
         }
     }
 
@@ -145,6 +134,15 @@ public abstract class BaseMvpFragment extends Fragment implements MvpView, Activ
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return mDialog;
         }
+    }
+
+
+    protected void onBackPressed(){
+        fragmentListener.onFragmentBackPressed();
+    }
+
+    protected void showAddRecipeButton(boolean isShow){
+        fragmentListener.showAddRecipeButton(isShow);
     }
 
     protected boolean isFragmentAttached() {
@@ -191,5 +189,10 @@ public abstract class BaseMvpFragment extends Fragment implements MvpView, Activ
                 inputManager.showSoftInput(inputField, InputMethodManager.SHOW_IMPLICIT);
             }
         }
+    }
+
+    public interface OnFragmentListener {
+        void onFragmentBackPressed();
+        void showAddRecipeButton(boolean isShow);
     }
 }

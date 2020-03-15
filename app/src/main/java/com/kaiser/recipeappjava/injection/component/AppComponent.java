@@ -1,16 +1,16 @@
 package com.kaiser.recipeappjava.injection.component;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.kaiser.recipeappjava.AppApplication;
 import com.kaiser.recipeappjava.base.activity.BaseActivity;
 import com.kaiser.recipeappjava.base.activity.BaseMvpActivity;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
-import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.injection.context.ApplicationContext;
 import com.kaiser.recipeappjava.injection.module.AppModule;
 import com.kaiser.recipeappjava.ui.addrecipe.AddRecipeFragment;
+import com.kaiser.recipeappjava.ui.detailrecipe.DetailRecipeFragment;
+import com.kaiser.recipeappjava.ui.editrecipe.EditRecipeFragment;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeActivity;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeFragment;
 
@@ -37,9 +37,11 @@ public interface AppComponent {
 
     void inject(AddRecipeFragment fragment);
 
-    void inject(AppApplication mApplication);
+    void inject(DetailRecipeFragment fragment);
 
-    Application application();
+    void inject(EditRecipeFragment fragment);
+
+    void inject(AppApplication mApplication);
 
     @ApplicationContext
     Context context();

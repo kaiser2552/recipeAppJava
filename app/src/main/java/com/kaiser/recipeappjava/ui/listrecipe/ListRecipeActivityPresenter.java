@@ -7,7 +7,7 @@ import javax.inject.Inject;
 public class ListRecipeActivityPresenter extends BasePresenter<ListRecipeActivityMvpView> {
 
     @Inject
-    public ListRecipeActivityPresenter() {
+    ListRecipeActivityPresenter() {
 
     }
 

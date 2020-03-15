@@ -46,7 +46,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     public Integer deleteRecipe(String recipeName) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] recipe = {recipeName};
-        return db.delete(TABLE_RECIPES, "$KEY_RECIPE_NAME=?", recipe);
+        return db.delete(TABLE_RECIPES, KEY_RECIPE_NAME + "=?", recipe);
     }
 
     public Long addRecipe(RecipeModel recipe) {
@@ -71,7 +71,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_RECIPE_INGREDIENTS, recipe.getRecipeIngredients());
         values.put(KEY_RECIPE_STEPS, recipe.getRecipeStep());
         String[] oldRecipe = {oldRecipeName};
-        return db.update(TABLE_RECIPES, values, "$KEY_RECIPE_NAME=?", oldRecipe);
+        return db.update(TABLE_RECIPES, values, KEY_RECIPE_NAME + "=?", oldRecipe);
     }
 
     @Override

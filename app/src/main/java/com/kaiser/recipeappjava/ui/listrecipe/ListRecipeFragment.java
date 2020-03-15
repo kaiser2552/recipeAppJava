@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -15,8 +14,10 @@ import com.kaiser.recipeappjava.adapter.ListRecipeAdapter;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
 import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.model.RecipeModel;
+import com.kaiser.recipeappjava.ui.detailrecipe.DetailRecipeFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -24,14 +25,15 @@ import butterknife.BindView;
 
 public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFragmentMvpView {
 
-    RecipeDatabaseHelper mDataHelper;
+    private RecipeDatabaseHelper mDataHelper;
+    @Inject
+    ListRecipeFragmentPresenter mPresenter;
 
     @BindView(R.id.list_recipe)
     ListView list_recipe;
 
     public static ListRecipeFragment newInstance() {
-        ListRecipeFragment fragment = new ListRecipeFragment();
-        return fragment;
+        return new ListRecipeFragment();
     }
 
     @Override
@@ -48,13 +50,16 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDataHelper = new RecipeDatabaseHelper(getContext());
+        mPresenter.attachView(this);
 
         initViews();
     }
 
     private void initViews(){
+        showAddRecipeButton(true);
+
         list_recipe.setAdapter(new ListRecipeAdapter(this.getContext(), getRecipes()));
-        list_recipe.setOnItemClickListener((parent, view, position, id) -> switchFragment(ListRecipeFragment.newInstance()));
+        list_recipe.setOnItemClickListener((parent, view, position, id) -> recipeClicked(position));
     }
 
     @Override
@@ -81,15 +86,9 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
     protected void injectAppComponent() {
         getAppComponent().inject(this);
     }
-
-    @Override
-    public void switchActivity(Intent intent) {
-        startActivity(intent);
-    }
-
     @Override
     public void switchFragment(Fragment fragment) {
-        getActivity()
+        Objects.requireNonNull(getActivity())
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName())
@@ -117,12 +116,7 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
     }
 
     @Override
-    public void recipeClicked() {
-
-    }
-
-    @Override
-    public void addRecipeClicked() {
-
+    public void recipeClicked(Integer position) {
+        switchFragment(DetailRecipeFragment.newInstance(getRecipes().get(position)));
     }
 }
