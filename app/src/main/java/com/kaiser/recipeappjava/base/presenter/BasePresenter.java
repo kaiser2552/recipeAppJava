@@ -1,10 +1,10 @@
 package com.kaiser.recipeappjava.base.presenter;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.kaiser.recipeappjava.base.view.MvpView;
 import com.kaiser.recipeappjava.injection.context.ApplicationContext;
-
 import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
@@ -55,6 +55,10 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     public T getMvpView() {
         return mMvpView;
+    }
+
+    public void toast(Integer resId){
+        Toast.makeText(this.mContext,resId, Toast.LENGTH_SHORT).show();
     }
 }
 

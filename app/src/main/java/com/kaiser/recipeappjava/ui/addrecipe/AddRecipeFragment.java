@@ -7,13 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 
 import com.kaiser.recipeappjava.R;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
-import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.model.RecipeModel;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeActivity;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeFragment;
@@ -26,9 +23,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragmentMvpView {
-
-    private RecipeDatabaseHelper mDataHelper;
-
     @Inject
     AddRecipeFragmentPresenter mPresenter;
 
@@ -65,7 +59,6 @@ public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragm
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDataHelper = new RecipeDatabaseHelper(getContext());
 
         initViews();
     }
@@ -98,22 +91,8 @@ public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragm
     }
 
     @Override
-    public void addRecipe(RecipeModel recipe) {
-        Long result = mDataHelper.addRecipe(recipe);
-        if (result > 0) {
-            toast(R.string.message_add_success);
-            gotoHomeScreen();
-        } else {
-            toast(R.string.message_add_fail);
-        }
-    }
-
-    private void toast(Integer resId) {
-        Toast.makeText(this.getContext(), resId, Toast.LENGTH_SHORT).show();
-    }
-
-    private void gotoHomeScreen() {
-        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
+    public void addRecipeAction(RecipeModel recipe) {
+        mPresenter.addRecipe(recipe);
     }
 
     @OnClick(R.id.btn_add)
@@ -121,7 +100,7 @@ public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragm
         if (et_recipe_name.getText().toString().equals("") || spinner_recipe_types.getSelectedItem().toString().equals("")
                 || et_recipe_image_link.getText().toString().equals("") || et_recipe_steps.getText().toString().equals("")
                 || et_recipe_ingredients.getText().toString().equals("")) {
-            toast(R.string.message_warning_lost_info);
+            mPresenter.toast(R.string.message_warning_lost_info);
         } else {
             RecipeModel recipe = new RecipeModel(
                     et_recipe_name.getText().toString(),
@@ -129,7 +108,7 @@ public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragm
                     et_recipe_image_link.getText().toString(),
                     et_recipe_ingredients.getText().toString(),
                     et_recipe_steps.getText().toString());
-            addRecipe(recipe);
+            addRecipeAction(recipe);
         }
     }
 
@@ -141,6 +120,11 @@ public class AddRecipeFragment extends BaseMvpFragment implements AddRecipeFragm
                 .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName())
                 .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public void gotoHomeScreen() {
+        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
     }
 
     @Override

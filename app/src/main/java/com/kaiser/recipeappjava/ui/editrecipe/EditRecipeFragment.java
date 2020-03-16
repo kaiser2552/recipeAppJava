@@ -9,13 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.kaiser.recipeappjava.R;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
-import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.model.RecipeModel;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeActivity;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeFragment;
@@ -30,7 +28,6 @@ import butterknife.OnClick;
 
 public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFragmentMvpView {
 
-    private RecipeDatabaseHelper mDataHelper;
     private String currentRecipeName;
     private RecipeModel currentRecipe;
 
@@ -80,7 +77,6 @@ public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFra
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDataHelper = new RecipeDatabaseHelper(getContext());
 
         initViews();
     }
@@ -105,6 +101,7 @@ public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFra
         et_recipe_steps.setText(currentRecipe.getRecipeStep());
         Picasso.with(getContext()).load(currentRecipe.getRecipeImageURL()).into(top_image);
 
+        @SuppressWarnings("unchecked")
         int spinnerPosition = adapter.getPosition(currentRecipe.getRecipeType());
         spinner_recipe_types.setSelection(spinnerPosition);
     }
@@ -128,21 +125,7 @@ public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFra
 
     @Override
     public void updateRecipe(RecipeModel recipe) {
-        Integer result = mDataHelper.updateRecipe(recipe, currentRecipeName);
-        if(result > 0){
-            toast(R.string.message_update_success);
-            gotoHomeScreen();
-        } else {
-            toast(R.string.message_update_fail);
-        }
-    }
-
-    private void toast(Integer resId){
-        Toast.makeText(this.getContext(),resId, Toast.LENGTH_SHORT).show();
-    }
-
-    private void gotoHomeScreen(){
-        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
+        mPresenter.updateRecipe(recipe, currentRecipeName);
     }
 
     @OnClick(R.id.btn_add)
@@ -150,7 +133,7 @@ public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFra
         if (et_recipe_name.getText().toString().equals("") || spinner_recipe_types.getSelectedItem().toString().equals("")
                 || et_recipe_image_link.getText().toString().equals("") || et_recipe_steps.getText().toString().equals("")
                 || et_recipe_ingredients.getText().toString().equals("")) {
-            toast(R.string.message_warning_lost_info);
+            mPresenter.toast(R.string.message_warning_lost_info);
         } else {
             RecipeModel recipe = new RecipeModel(
                     et_recipe_name.getText().toString(),
@@ -179,6 +162,11 @@ public class EditRecipeFragment extends BaseMvpFragment implements EditRecipeFra
         } else {
             hideProgressDialog();
         }
+    }
+
+    @Override
+    public void gotoHomeScreen() {
+        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
     }
 
     @Override

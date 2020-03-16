@@ -1,6 +1,5 @@
 package com.kaiser.recipeappjava.ui.listrecipe;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import com.kaiser.recipeappjava.R;
 import com.kaiser.recipeappjava.adapter.ListRecipeAdapter;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
-import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.model.RecipeModel;
 import com.kaiser.recipeappjava.ui.detailrecipe.DetailRecipeFragment;
 
@@ -25,7 +23,6 @@ import butterknife.BindView;
 
 public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFragmentMvpView {
 
-    private RecipeDatabaseHelper mDataHelper;
     @Inject
     ListRecipeFragmentPresenter mPresenter;
 
@@ -39,6 +36,8 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -49,8 +48,6 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDataHelper = new RecipeDatabaseHelper(getContext());
-        mPresenter.attachView(this);
 
         initViews();
     }
@@ -112,7 +109,7 @@ public class ListRecipeFragment extends BaseMvpFragment implements ListRecipeFra
 
     @Override
     public ArrayList<RecipeModel> getRecipes() {
-        return mDataHelper.allRecipeList();
+        return mPresenter.getListRecipes();
     }
 
     @Override

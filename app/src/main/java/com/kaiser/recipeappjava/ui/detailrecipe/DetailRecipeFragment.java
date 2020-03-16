@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.kaiser.recipeappjava.R;
 import com.kaiser.recipeappjava.base.fragment.BaseMvpFragment;
-import com.kaiser.recipeappjava.database.RecipeDatabaseHelper;
 import com.kaiser.recipeappjava.model.RecipeModel;
 import com.kaiser.recipeappjava.ui.editrecipe.EditRecipeFragment;
 import com.kaiser.recipeappjava.ui.listrecipe.ListRecipeActivity;
@@ -26,9 +24,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DetailRecipeFragment extends BaseMvpFragment implements DetaillRecipeFragmentMvpView {
+public class DetailRecipeFragment extends BaseMvpFragment implements DetailRecipeFragmentMvpView {
 
-    private RecipeDatabaseHelper mDataHelper;
     private RecipeModel recipe;
 
     @Inject
@@ -53,7 +50,7 @@ public class DetailRecipeFragment extends BaseMvpFragment implements DetaillReci
         return new DetailRecipeFragment(recipe);
     }
 
-    private DetailRecipeFragment(RecipeModel recipe){
+    private DetailRecipeFragment(RecipeModel recipe) {
         this.recipe = recipe;
     }
 
@@ -71,12 +68,11 @@ public class DetailRecipeFragment extends BaseMvpFragment implements DetaillReci
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDataHelper = new RecipeDatabaseHelper(getContext());
 
         initViews();
     }
 
-    private void initViews(){
+    private void initViews() {
         showAddRecipeButton(false);
 
         recipe_name.setText(recipe.getRecipeName());
@@ -102,26 +98,18 @@ public class DetailRecipeFragment extends BaseMvpFragment implements DetaillReci
         getAppComponent().inject(this);
     }
 
-    private void toast(Integer resId){
-        Toast.makeText(this.getContext(),resId, Toast.LENGTH_SHORT).show();
-    }
-
-    private void gotoHomeScreen(){
-        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
-    }
-
     @OnClick(R.id.btn_edit)
-    void editRecipe(){
+    void editRecipe() {
         editRecipe(recipe);
     }
 
     @OnClick(R.id.btn_go_back)
-    void goBack(){
+    void goBack() {
         onBackPressed();
     }
 
     @OnClick(R.id.btn_remove)
-    void removeRecipe(){
+    void removeRecipe() {
         removeRecipe(recipe.getRecipeName());
     }
 
@@ -132,13 +120,7 @@ public class DetailRecipeFragment extends BaseMvpFragment implements DetaillReci
 
     @Override
     public void removeRecipe(String recipeName) {
-        Integer result = mDataHelper.deleteRecipe(recipeName);
-        if(result > 0){
-            toast(R.string.message_remove_success);
-            gotoHomeScreen();
-        } else {
-            toast(R.string.message_remove_fail);
-        }
+        mPresenter.removeRecipe(recipeName);
     }
 
     @Override
@@ -149,6 +131,11 @@ public class DetailRecipeFragment extends BaseMvpFragment implements DetaillReci
                 .replace(R.id.fragment, fragment, fragment.getClass().getSimpleName())
                 .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+    @Override
+    public void gotoHomeScreen() {
+        ((ListRecipeActivity) Objects.requireNonNull(getContext())).setFragmentToRoot(ListRecipeFragment.newInstance());
     }
 
     @Override

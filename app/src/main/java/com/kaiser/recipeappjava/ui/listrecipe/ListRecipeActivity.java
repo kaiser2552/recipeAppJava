@@ -1,6 +1,5 @@
 package com.kaiser.recipeappjava.ui.listrecipe;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -88,7 +87,6 @@ public class ListRecipeActivity extends BaseMvpActivity implements ListRecipeAct
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
         } else {
